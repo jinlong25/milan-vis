@@ -1,7 +1,7 @@
 //create a namespace for canvas
 var cv = {
-  'width': 400,
-  'height': 600,
+  'width': 780,
+  'height':780,
 	'top': 10,
 	'right': 10,
 	'bottom': 10,
@@ -11,11 +11,19 @@ var cv = {
 //create scales for shot X/Y
 var xScalePitch = d3.scaleLinear()
   .domain([0, 1])
-  .range([0, 400]);
+  .range([0, cv.width + cv.left + cv.right]);
 
 var yScalePitch = d3.scaleLinear()
   .domain([0, 1])
-  .range([0, 600]);
+  .range([cv.height + cv.top + cv.bottom, 0]);
+
+//create a svg as main cavnas
+var svg = d3.select('#canvas').append('svg')
+  .attr('width', cv.width + cv.top + cv.right)
+  .attr('height', cv.height + cv.top + cv.bottom);
+
+//draw the soccer pitch in svg
+
 
 //read in the data from csv
 d3.csv('data/data.csv').then(
@@ -25,21 +33,14 @@ d3.csv('data/data.csv').then(
     var goals = data.filter(isAGoal);
     console.log(goals);
 
-    //create a svg as main cavnas
-    var svg = d3.select('#canvas').append('svg')
-    .attr('width', cv.width + cv.top + cv.right)
-    .attr('height', cv.height + cv.top + cv.bottom);
-    // .append('g')
-    // .attr('transform', 'translate(' + (cv.left + cv.width) / 2 + ',' + (cv.top + cv.height/2) + ')');
-
     //add pitch background
     svg.append('rect')
       .attr('x', 0)
       .attr('y', 0)
       .attr('width', cv.width + cv.top + cv.right)
       .attr('height', cv.height + cv.top + cv.bottom)
-      .attr('fill', 'green')
-      .attr('fill-opacity', 0.2);
+      .attr('fill', '#222222')
+      .attr('fill-opacity', 0.9);
 
     //plot all goals
     svg.selectAll('.goal')
@@ -68,11 +69,18 @@ d3.csv('data/data.csv').then(
       .attr('data-xG', d => d.xG)
       .attr('r', 3)
       .attr('cx', d => xScalePitch(d.X))
-      .attr('cy', d => xScalePitch(d.Y))
+      .attr('cy', d => yScalePitch(d.Y))
       .attr('fill-opacity', 0)
-      .attr('stroke', '#0063C3')
-      .attr('stroke-width', 0.5)
-      .attr('stroke-opacity', 0.8);
+      .attr('stroke', '#FFFF00')
+      .attr('stroke-width', 0.8)
+      .attr('stroke-opacity', 1);
+
+
+    //add mouseover
+    d3.selectAll('.goal').on('mouseover', function(d){
+      var thisGoal = d3.select(this);
+      console.log(thisGoal.attr('data-player') + ' ' + thisGoal.attr('data-h_team') + ' vs ' + thisGoal.attr('data-a_team'));
+    });
 
   }
 );
