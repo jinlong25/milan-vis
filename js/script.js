@@ -21,11 +21,11 @@ var yScaleField = d3.scaleLinear()
 //create scales for shot X/Y
 var xScaleUnderstat = d3.scaleLinear()
   .domain([0, 1])
-  .range([0, cv.width + cv.left + cv.right]);
+  .range([0, cv.width]);
 
 var yScaleUnderstat = d3.scaleLinear()
   .domain([0, 1])
-  .range([cv.height + cv.top + cv.bottom, 0]);
+  .range([cv.height, 0]);
 
 //create a svg as main cavnas
 var svg = d3.select('#canvas').append('svg')
@@ -43,47 +43,40 @@ svg.append('rect')
   .attr('fill-opacity', 0.9);
 
 var field = svg.append('g')
-  .attr('class', 'field-lines');
+  .attr('class', 'field-lines')
+  .attr('transform', 'translate(' + cv.left + ' ' + cv.top + ')' );
 
 //draw side lines
 field.append('line')
-  .attr('x1', cv.left)
-  .attr('x2', cv.left)
-  .attr('y1', cv.top)
-  .attr('y2', cv.height + cv.top)
+  .attr('x1', 0)
+  .attr('x2', 0)
+  .attr('y1', 0)
+  .attr('y2', cv.height)
   .attr('stroke-width', cv.fieldLineWidth)
   .attr('stroke', '#ffffff');
 
 field.append('line')
-  .attr('x1', cv.left + cv.width)
-  .attr('x2', cv.left + cv.width)
-  .attr('y1', cv.top)
-  .attr('y2', cv.height + cv.top)
+  .attr('x1', cv.width)
+  .attr('x2', cv.width)
+  .attr('y1', 0)
+  .attr('y2', cv.height)
   .attr('stroke-width', cv.fieldLineWidth)
   .attr('stroke', '#ffffff');
 
 //draw end lines
 field.append('line')
-  .attr('x1', cv.left)
-  .attr('x2', cv.left + cv.width)
-  .attr('y1', cv.top)
-  .attr('y2', cv.top)
+  .attr('x1', 0)
+  .attr('x2', cv.width)
+  .attr('y1', 0)
+  .attr('y2', 0)
   .attr('stroke-width', cv.fieldLineWidth)
   .attr('stroke', '#ffffff');
 
 field.append('line')
-  .attr('x1', cv.left)
-  .attr('x2', cv.left + cv.width)
-  .attr('y1', cv.top)
-  .attr('y2', cv.top)
-  .attr('stroke-width', cv.fieldLineWidth)
-  .attr('stroke', '#ffffff');
-
-field.append('line')
-  .attr('x1', cv.left)
-  .attr('x2', cv.left + cv.width)
-  .attr('y1', cv.height + cv.top)
-  .attr('y2', cv.height + cv.top)
+  .attr('x1', 0)
+  .attr('x2', cv.width)
+  .attr('y1', cv.height)
+  .attr('y2', cv.height)
   .attr('stroke-width', cv.fieldLineWidth)
   .attr('stroke', '#ffffff');
 
@@ -92,51 +85,51 @@ field.append('line')
 
 //draw penalty area
 field.append('line')
-  .attr('x1', 245 + cv.left)
-  .attr('x2', 245 + cv.left)
-  .attr('y1', 0 + cv.top)
-  .attr('y2', 180 + cv.top)
+  .attr('x1', 245)
+  .attr('x2', 245)
+  .attr('y1', 0)
+  .attr('y2', 180)
   .attr('stroke-width', cv.fieldLineWidth)
   .attr('stroke', '#ffffff');
 
 field.append('line')
-  .attr('x1', 685 + cv.left)
-  .attr('x2', 685 + cv.left)
-  .attr('y1', 0 + cv.top)
-  .attr('y2', 180 + cv.top)
+  .attr('x1', 685)
+  .attr('x2', 685)
+  .attr('y1', 0)
+  .attr('y2', 180)
   .attr('stroke-width', cv.fieldLineWidth)
   .attr('stroke', '#ffffff');
 
 field.append('line')
-  .attr('x1', 245 + cv.left)
-  .attr('x2', 685 + cv.left)
-  .attr('y1', 180 + cv.top)
-  .attr('y2', 180 + cv.top)
+  .attr('x1', 245)
+  .attr('x2', 685)
+  .attr('y1', 180)
+  .attr('y2', 180)
   .attr('stroke-width', cv.fieldLineWidth)
   .attr('stroke', '#ffffff');
 
 //draw goal box
 field.append('line')
-  .attr('x1', 365 + cv.left)
-  .attr('x2', 365 + cv.left)
-  .attr('y1', 0 + cv.top)
-  .attr('y2', 60 + cv.top)
+  .attr('x1', 365)
+  .attr('x2', 365)
+  .attr('y1', 0)
+  .attr('y2', 60)
   .attr('stroke-width', cv.fieldLineWidth)
   .attr('stroke', '#ffffff');
 
 field.append('line')
-  .attr('x1', 565 + cv.left)
-  .attr('x2', 565 + cv.left)
-  .attr('y1', 0 + cv.top)
-  .attr('y2', 60 + cv.top)
+  .attr('x1', 565)
+  .attr('x2', 565)
+  .attr('y1', 0)
+  .attr('y2', 60)
   .attr('stroke-width', cv.fieldLineWidth)
   .attr('stroke', '#ffffff');
 
 field.append('line')
-  .attr('x1', 365 + cv.left)
-  .attr('x2', 565 + cv.left)
-  .attr('y1', 60 + cv.top)
-  .attr('y2', 60 + cv.top)
+  .attr('x1', 365)
+  .attr('x2', 565)
+  .attr('y1', 60)
+  .attr('y2', 60)
   .attr('stroke-width', cv.fieldLineWidth)
   .attr('stroke', '#ffffff');
 
@@ -149,7 +142,9 @@ d3.csv('data/data.csv').then(
     console.log(goals);
 
     //plot all goals
-    svg.selectAll('.goal')
+    svg.append('g')
+      .attr('class', 'goals')
+      .selectAll('.goal')
       .data(goals)
       .enter().append('circle')
       .attr('class', 'goal')
@@ -181,6 +176,43 @@ d3.csv('data/data.csv').then(
       .attr('stroke-width', 0.8)
       .attr('stroke-opacity', 1);
 
+    //draw anchor dots ##remove later
+    field.append('circle')
+      .attr('r', 5)
+      .attr('cx', xScaleUnderstat(0))
+      .attr('cy', yScaleUnderstat(0))
+      .attr('fill', 'red')
+      .attr('stroke', '#FFFF00')
+      .attr('stroke-width', 0.8)
+      .attr('stroke-opacity', 1);
+
+    field.append('circle')
+      .attr('r', 5)
+      .attr('cx', xScaleUnderstat(1))
+      .attr('cy', yScaleUnderstat(0))
+      .attr('fill', 'red')
+      .attr('stroke', '#FFFF00')
+      .attr('stroke-width', 0.8)
+      .attr('stroke-opacity', 1);
+
+    field.append('circle')
+      .attr('r', 5)
+      .attr('cx', xScaleUnderstat(0))
+      .attr('cy', yScaleUnderstat(1))
+      .attr('fill', 'red')
+      .attr('stroke', '#FFFF00')
+      .attr('stroke-width', 0.8)
+      .attr('stroke-opacity', 1);
+
+    field.append('circle')
+      .attr('r', 5)
+      .attr('cx', xScaleUnderstat(1))
+      .attr('cy', yScaleUnderstat(1))
+      .attr('fill', 'red')
+      .attr('stroke', '#FFFF00')
+      .attr('stroke-width', 0.8)
+      .attr('stroke-opacity', 1);
+
 
     //add mouseover
     d3.selectAll('.goal').on('mouseover', function(d){
@@ -197,8 +229,6 @@ function isAGoal(obj) {
 };
 
 
-//add field with lines
-
 //add player profiles
 
 //add filters
@@ -208,6 +238,7 @@ function isAGoal(obj) {
 
 //to-do list
 //- plot field (30mins)
+//- rotate understat coordinate system
 //- add meta info
 //- add player profiles
 //- animation of goals
