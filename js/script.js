@@ -1,29 +1,144 @@
 //create a namespace for canvas
 var cv = {
-  'width': 780,
+  'width': 930,
   'height':780,
-	'top': 10,
+	'top': 50,
 	'right': 10,
 	'bottom': 10,
-	'left': 10
+	'left': 10,
+  'fieldLineWidth': 2
 };
 
+//create scale for soccer field
+var xScaleField = d3.scaleLinear()
+  .domain([0, cv.width + cv.left + cv.right])
+  .range([0, cv.width + cv.left + cv.right]);
+
+var yScaleField = d3.scaleLinear()
+  .domain([0, cv.height + cv.top + cv.bottom])
+  .range([cv.height + cv.top + cv.bottom, 0]);
+
 //create scales for shot X/Y
-var xScalePitch = d3.scaleLinear()
+var xScaleUnderstat = d3.scaleLinear()
   .domain([0, 1])
   .range([0, cv.width + cv.left + cv.right]);
 
-var yScalePitch = d3.scaleLinear()
+var yScaleUnderstat = d3.scaleLinear()
   .domain([0, 1])
   .range([cv.height + cv.top + cv.bottom, 0]);
 
 //create a svg as main cavnas
 var svg = d3.select('#canvas').append('svg')
-  .attr('width', cv.width + cv.top + cv.right)
+  .attr('width', cv.width + cv.left + cv.right)
   .attr('height', cv.height + cv.top + cv.bottom);
 
-//draw the soccer pitch in svg
+//draw the soccer field in svg
+//draw field background
+svg.append('rect')
+  .attr('x', 0)
+  .attr('y', 0)
+  .attr('width', cv.width + cv.top + cv.right)
+  .attr('height', cv.height + cv.top + cv.bottom)
+  .attr('fill', '#222222')
+  .attr('fill-opacity', 0.9);
 
+var field = svg.append('g')
+  .attr('class', 'field-lines');
+
+//draw side lines
+field.append('line')
+  .attr('x1', cv.left)
+  .attr('x2', cv.left)
+  .attr('y1', cv.top)
+  .attr('y2', cv.height + cv.top)
+  .attr('stroke-width', cv.fieldLineWidth)
+  .attr('stroke', '#ffffff');
+
+field.append('line')
+  .attr('x1', cv.left + cv.width)
+  .attr('x2', cv.left + cv.width)
+  .attr('y1', cv.top)
+  .attr('y2', cv.height + cv.top)
+  .attr('stroke-width', cv.fieldLineWidth)
+  .attr('stroke', '#ffffff');
+
+//draw end lines
+field.append('line')
+  .attr('x1', cv.left)
+  .attr('x2', cv.left + cv.width)
+  .attr('y1', cv.top)
+  .attr('y2', cv.top)
+  .attr('stroke-width', cv.fieldLineWidth)
+  .attr('stroke', '#ffffff');
+
+field.append('line')
+  .attr('x1', cv.left)
+  .attr('x2', cv.left + cv.width)
+  .attr('y1', cv.top)
+  .attr('y2', cv.top)
+  .attr('stroke-width', cv.fieldLineWidth)
+  .attr('stroke', '#ffffff');
+
+field.append('line')
+  .attr('x1', cv.left)
+  .attr('x2', cv.left + cv.width)
+  .attr('y1', cv.height + cv.top)
+  .attr('y2', cv.height + cv.top)
+  .attr('stroke-width', cv.fieldLineWidth)
+  .attr('stroke', '#ffffff');
+
+//draw midfield circle
+// field.append('line')
+
+//draw penalty area
+field.append('line')
+  .attr('x1', 245 + cv.left)
+  .attr('x2', 245 + cv.left)
+  .attr('y1', 0 + cv.top)
+  .attr('y2', 180 + cv.top)
+  .attr('stroke-width', cv.fieldLineWidth)
+  .attr('stroke', '#ffffff');
+
+field.append('line')
+  .attr('x1', 685 + cv.left)
+  .attr('x2', 685 + cv.left)
+  .attr('y1', 0 + cv.top)
+  .attr('y2', 180 + cv.top)
+  .attr('stroke-width', cv.fieldLineWidth)
+  .attr('stroke', '#ffffff');
+
+field.append('line')
+  .attr('x1', 245 + cv.left)
+  .attr('x2', 685 + cv.left)
+  .attr('y1', 180 + cv.top)
+  .attr('y2', 180 + cv.top)
+  .attr('stroke-width', cv.fieldLineWidth)
+  .attr('stroke', '#ffffff');
+
+//draw goal box
+field.append('line')
+  .attr('x1', 365 + cv.left)
+  .attr('x2', 365 + cv.left)
+  .attr('y1', 0 + cv.top)
+  .attr('y2', 60 + cv.top)
+  .attr('stroke-width', cv.fieldLineWidth)
+  .attr('stroke', '#ffffff');
+
+field.append('line')
+  .attr('x1', 565 + cv.left)
+  .attr('x2', 565 + cv.left)
+  .attr('y1', 0 + cv.top)
+  .attr('y2', 60 + cv.top)
+  .attr('stroke-width', cv.fieldLineWidth)
+  .attr('stroke', '#ffffff');
+
+field.append('line')
+  .attr('x1', 365 + cv.left)
+  .attr('x2', 565 + cv.left)
+  .attr('y1', 60 + cv.top)
+  .attr('y2', 60 + cv.top)
+  .attr('stroke-width', cv.fieldLineWidth)
+  .attr('stroke', '#ffffff');
 
 //read in the data from csv
 d3.csv('data/data.csv').then(
@@ -32,15 +147,6 @@ d3.csv('data/data.csv').then(
     //filter goals
     var goals = data.filter(isAGoal);
     console.log(goals);
-
-    //add pitch background
-    svg.append('rect')
-      .attr('x', 0)
-      .attr('y', 0)
-      .attr('width', cv.width + cv.top + cv.right)
-      .attr('height', cv.height + cv.top + cv.bottom)
-      .attr('fill', '#222222')
-      .attr('fill-opacity', 0.9);
 
     //plot all goals
     svg.selectAll('.goal')
@@ -68,8 +174,8 @@ d3.csv('data/data.csv').then(
       .attr('data-situation', d => d.situation)
       .attr('data-xG', d => d.xG)
       .attr('r', 3)
-      .attr('cx', d => xScalePitch(d.X))
-      .attr('cy', d => yScalePitch(d.Y))
+      .attr('cx', d => xScaleUnderstat(d.X))
+      .attr('cy', d => yScaleUnderstat(d.Y))
       .attr('fill-opacity', 0)
       .attr('stroke', '#FFFF00')
       .attr('stroke-width', 0.8)
@@ -96,3 +202,16 @@ function isAGoal(obj) {
 //add player profiles
 
 //add filters
+
+
+
+
+//to-do list
+//- plot field (30mins)
+//- add meta info
+//- add player profiles
+//- animation of goals
+//- add filters
+//- plot hexagon heatmap
+//- add youtube links
+//- xG map?
