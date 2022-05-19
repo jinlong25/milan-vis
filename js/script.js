@@ -2,12 +2,47 @@
 var cv = {
   'width': 930,
   'height':780,
+  // 'width': 610,
+  // 'height': 520,
 	'top': 50,
 	'right': 10,
 	'bottom': 10,
 	'left': 10,
   'fieldLineWidth': 2
 };
+
+var milan_players = [
+  '7193',
+  '502',
+  '1741',
+  '8838',
+  '2547',
+  '7958',
+  '8297',
+  '1574',
+  '1489',
+  '1852',
+  '6421',
+  '1254',
+  '6981',
+  '1119',
+  '1311',
+  '703',
+  '1471',
+  '4699',
+  '3429',
+  '8163',
+  '2303',
+  '4920',
+  '8313',
+  '1547',
+  '5803',
+  '9440',
+  '3737',
+  '1416'
+];
+
+console.log(milan_players.includes('703'));
 
 //create scale for soccer field##delete
 var xScaleField = d3.scaleLinear()
@@ -43,111 +78,23 @@ svg.append('rect')
   .attr('fill', '#222222')
   .attr('fill-opacity', 0.9);
 
-var field = svg.append('g')
-  .attr('class', 'field-lines')
-  .attr('transform', 'translate(' + cv.left + ' ' + cv.top + ')' );
-
-//draw side lines
-field.append('line')
-  .attr('x1', 0)
-  .attr('x2', 0)
-  .attr('y1', 0)
-  .attr('y2', cv.height)
-  .attr('stroke-width', cv.fieldLineWidth)
-  .attr('stroke', '#ffffff');
-
-field.append('line')
-  .attr('x1', cv.width)
-  .attr('x2', cv.width)
-  .attr('y1', 0)
-  .attr('y2', cv.height)
-  .attr('stroke-width', cv.fieldLineWidth)
-  .attr('stroke', '#ffffff');
-
-//draw end lines
-field.append('line')
-  .attr('x1', 0)
-  .attr('x2', cv.width)
-  .attr('y1', 0)
-  .attr('y2', 0)
-  .attr('stroke-width', cv.fieldLineWidth)
-  .attr('stroke', '#ffffff');
-
-field.append('line')
-  .attr('x1', 0)
-  .attr('x2', cv.width)
-  .attr('y1', cv.height)
-  .attr('y2', cv.height)
-  .attr('stroke-width', cv.fieldLineWidth)
-  .attr('stroke', '#ffffff');
-
-//draw midfield circle
-// field.append('line')
-
-//draw penalty area
-field.append('line')
-  .attr('x1', 245)
-  .attr('x2', 245)
-  .attr('y1', 0)
-  .attr('y2', 180)
-  .attr('stroke-width', cv.fieldLineWidth)
-  .attr('stroke', '#ffffff');
-
-field.append('line')
-  .attr('x1', 685)
-  .attr('x2', 685)
-  .attr('y1', 0)
-  .attr('y2', 180)
-  .attr('stroke-width', cv.fieldLineWidth)
-  .attr('stroke', '#ffffff');
-
-field.append('line')
-  .attr('x1', 245)
-  .attr('x2', 685)
-  .attr('y1', 180)
-  .attr('y2', 180)
-  .attr('stroke-width', cv.fieldLineWidth)
-  .attr('stroke', '#ffffff');
-
-//draw goal box
-field.append('line')
-  .attr('x1', 365)
-  .attr('x2', 365)
-  .attr('y1', 0)
-  .attr('y2', 60)
-  .attr('stroke-width', cv.fieldLineWidth)
-  .attr('stroke', '#ffffff');
-
-field.append('line')
-  .attr('x1', 565)
-  .attr('x2', 565)
-  .attr('y1', 0)
-  .attr('y2', 60)
-  .attr('stroke-width', cv.fieldLineWidth)
-  .attr('stroke', '#ffffff');
-
-field.append('line')
-  .attr('x1', 365)
-  .attr('x2', 565)
-  .attr('y1', 60)
-  .attr('y2', 60)
-  .attr('stroke-width', cv.fieldLineWidth)
-  .attr('stroke', '#ffffff');
+drawFieldLines();
 
 //read in the data from csv
-d3.csv('data/data.csv').then(
+d3.csv('data/data-backup.csv').then(
   function(data) {
     // console.log(data);
     //filter goals
-    var goals = data.filter(isAGoal);
-    console.log(goals);
+    var selectedShots = data.filter(isAMilanGoal);
+    // var selectedShots = data;
+    console.log(selectedShots);
 
     //plot all goals
     svg.append('g')
       .attr('class', 'goals')
       .attr('transform', 'translate(' + cv.left + ' ' + cv.top + ')')
       .selectAll('.goal')
-      .data(goals)
+      .data(selectedShots)
       .enter().append('circle')
       .attr('class', 'goal')
       .attr('data-id', d => d.id)
@@ -196,6 +143,7 @@ d3.csv('data/data.csv').then(
     d3.selectAll('.goal').on('mouseover', function(d){
       var thisGoal = d3.select(this);
       console.log(thisGoal.attr('data-player') + ' ' + thisGoal.attr('data-h_team') + ' vs ' + thisGoal.attr('data-a_team'));
+      console.log(thisGoal.attr('data-X') + ', ' + thisGoal.attr('data-Y'))
     });
 
   }
@@ -205,6 +153,104 @@ function isAGoal(obj) {
   return obj.result == 'Goal';
   // return obj.result == 'Goal' || obj.result == 'OwnGoal'
 };
+
+function isAMilanGoal(obj) {
+  return obj.result == 'Goal' && milan_players.includes(obj.player_id);
+  // return obj.result == 'Goal' || obj.result == 'OwnGoal'
+};
+
+function drawFieldLines() {
+  var field = svg.append('g')
+    .attr('class', 'field-lines')
+    .attr('transform', 'translate(' + cv.left + ' ' + cv.top + ')' );
+
+  //draw side lines
+  field.append('line')
+    .attr('x1', 0)
+    .attr('x2', 0)
+    .attr('y1', 0)
+    .attr('y2', cv.height)
+    .attr('stroke-width', cv.fieldLineWidth)
+    .attr('stroke', '#ffffff');
+
+  field.append('line')
+    .attr('x1', cv.width)
+    .attr('x2', cv.width)
+    .attr('y1', 0)
+    .attr('y2', cv.height)
+    .attr('stroke-width', cv.fieldLineWidth)
+    .attr('stroke', '#ffffff');
+
+  //draw end lines
+  field.append('line')
+    .attr('x1', 0)
+    .attr('x2', cv.width)
+    .attr('y1', 0)
+    .attr('y2', 0)
+    .attr('stroke-width', cv.fieldLineWidth)
+    .attr('stroke', '#ffffff');
+
+  field.append('line')
+    .attr('x1', 0)
+    .attr('x2', cv.width)
+    .attr('y1', cv.height)
+    .attr('y2', cv.height)
+    .attr('stroke-width', cv.fieldLineWidth)
+    .attr('stroke', '#ffffff');
+
+  //draw midfield circle
+  // field.append('line')
+
+  //draw penalty area
+  field.append('line')
+    .attr('x1', 245)
+    .attr('x2', 245)
+    .attr('y1', 0)
+    .attr('y2', 180)
+    .attr('stroke-width', cv.fieldLineWidth)
+    .attr('stroke', '#ffffff');
+
+  field.append('line')
+    .attr('x1', 685)
+    .attr('x2', 685)
+    .attr('y1', 0)
+    .attr('y2', 180)
+    .attr('stroke-width', cv.fieldLineWidth)
+    .attr('stroke', '#ffffff');
+
+  field.append('line')
+    .attr('x1', 245)
+    .attr('x2', 685)
+    .attr('y1', 180)
+    .attr('y2', 180)
+    .attr('stroke-width', cv.fieldLineWidth)
+    .attr('stroke', '#ffffff');
+
+  //draw goal box
+  field.append('line')
+    .attr('x1', 365)
+    .attr('x2', 365)
+    .attr('y1', 0)
+    .attr('y2', 60)
+    .attr('stroke-width', cv.fieldLineWidth)
+    .attr('stroke', '#ffffff');
+
+  field.append('line')
+    .attr('x1', 565)
+    .attr('x2', 565)
+    .attr('y1', 0)
+    .attr('y2', 60)
+    .attr('stroke-width', cv.fieldLineWidth)
+    .attr('stroke', '#ffffff');
+
+  field.append('line')
+    .attr('x1', 365)
+    .attr('x2', 565)
+    .attr('y1', 60)
+    .attr('y2', 60)
+    .attr('stroke-width', cv.fieldLineWidth)
+    .attr('stroke', '#ffffff');
+}
 
 
 //add player profiles
