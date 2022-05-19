@@ -42,8 +42,6 @@ var milan_players = [
   '1416'
 ];
 
-console.log(milan_players.includes('703'));
-
 //create scale for soccer field##delete
 var xScaleField = d3.scaleLinear()
   .domain([0, cv.width + cv.left + cv.right])
@@ -84,9 +82,15 @@ drawFieldLines();
 d3.csv('data/data-backup.csv').then(
   function(data) {
     // console.log(data);
+    
     //filter goals
-    var selectedShots = data.filter(isAMilanGoal);
+    // var selectedShots = data.filter(isAMilanGoal);
     // var selectedShots = data;
+    var selectedPlayerId = '7193'
+    var selectedShots = data.filter(function(obj) {
+      return obj.player_id == selectedPlayerId;
+    });
+
     console.log(selectedShots);
 
     //plot all goals
