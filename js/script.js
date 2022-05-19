@@ -9,7 +9,7 @@ var cv = {
   'fieldLineWidth': 2
 };
 
-//create scale for soccer field
+//create scale for soccer field##delete
 var xScaleField = d3.scaleLinear()
   .domain([0, cv.width + cv.left + cv.right])
   .range([0, cv.width + cv.left + cv.right]);
@@ -21,16 +21,17 @@ var yScaleField = d3.scaleLinear()
 //create scales for shot X/Y
 var xScaleUnderstat = d3.scaleLinear()
   .domain([0, 1])
-  .range([0, cv.width]);
+  .range([cv.height + 300, 0]);
 
 var yScaleUnderstat = d3.scaleLinear()
   .domain([0, 1])
-  .range([cv.height, 0]);
+  // .range([cv.height, 0]);
+  .range([cv.width, 0]);
 
 //create a svg as main cavnas
 var svg = d3.select('#canvas').append('svg')
   .attr('width', cv.width + cv.left + cv.right)
-  .attr('height', cv.height + cv.top + cv.bottom);
+  .attr('height', cv.height + cv.top + cv.bottom + 500);//##recalibrate later
 
 //draw the soccer field in svg
 //draw field background
@@ -144,6 +145,7 @@ d3.csv('data/data.csv').then(
     //plot all goals
     svg.append('g')
       .attr('class', 'goals')
+      .attr('transform', 'translate(' + cv.left + ' ' + cv.top + ')')
       .selectAll('.goal')
       .data(goals)
       .enter().append('circle')
@@ -152,6 +154,7 @@ d3.csv('data/data.csv').then(
       .attr('data-minute', d => d.minute)
       .attr('data-result', d => d.result)
       .attr('data-X', d => d.X)
+      .attr('data-X-scaled', d => xScaleUnderstat(d.X))//##
       .attr('data-Y', d => d.Y)
       .attr('data-a_goals', d => d.a_goals)
       .attr('data-a_team', d => d.a_team)
@@ -169,50 +172,25 @@ d3.csv('data/data.csv').then(
       .attr('data-situation', d => d.situation)
       .attr('data-xG', d => d.xG)
       .attr('r', 3)
-      .attr('cx', d => xScaleUnderstat(d.X))
-      .attr('cy', d => yScaleUnderstat(d.Y))
+      .attr('cy', d => xScaleUnderstat(parseFloat(d.X)))
+      .attr('cx', d => yScaleUnderstat(parseFloat(d.Y)))
       .attr('fill-opacity', 0)
-      .attr('stroke', '#FFFF00')
-      .attr('stroke-width', 0.8)
+      // .attr('stroke', '#FFFF00')
+      .attr('stroke', function(d){
+        if(d.X == '0' && d.Y == '0') {
+          return 'white';
+        } else if (d.X == '1' && d.Y == '0') {
+          return 'green';
+        } else if (d.X == '0' && d.Y == '1') {
+          return 'yellow';
+        } else if (d.X == '1' && d.Y == '1') {
+          return 'red';
+        } else {
+          return 'pink';
+        }
+      })
+      .attr('stroke-width', 1.2)
       .attr('stroke-opacity', 1);
-
-    //draw anchor dots ##remove later
-    field.append('circle')
-      .attr('r', 5)
-      .attr('cx', xScaleUnderstat(0))
-      .attr('cy', yScaleUnderstat(0))
-      .attr('fill', 'red')
-      .attr('stroke', '#FFFF00')
-      .attr('stroke-width', 0.8)
-      .attr('stroke-opacity', 1);
-
-    field.append('circle')
-      .attr('r', 5)
-      .attr('cx', xScaleUnderstat(1))
-      .attr('cy', yScaleUnderstat(0))
-      .attr('fill', 'red')
-      .attr('stroke', '#FFFF00')
-      .attr('stroke-width', 0.8)
-      .attr('stroke-opacity', 1);
-
-    field.append('circle')
-      .attr('r', 5)
-      .attr('cx', xScaleUnderstat(0))
-      .attr('cy', yScaleUnderstat(1))
-      .attr('fill', 'red')
-      .attr('stroke', '#FFFF00')
-      .attr('stroke-width', 0.8)
-      .attr('stroke-opacity', 1);
-
-    field.append('circle')
-      .attr('r', 5)
-      .attr('cx', xScaleUnderstat(1))
-      .attr('cy', yScaleUnderstat(1))
-      .attr('fill', 'red')
-      .attr('stroke', '#FFFF00')
-      .attr('stroke-width', 0.8)
-      .attr('stroke-opacity', 1);
-
 
     //add mouseover
     d3.selectAll('.goal').on('mouseover', function(d){
@@ -234,12 +212,10 @@ function isAGoal(obj) {
 //add filters
 
 
-
-
 //to-do list
-//- plot field (30mins)
-//- rotate understat coordinate system
-//- add meta info
+//- plot field (DONE)
+//- rotate understat coordinate system (DONE)
+//- add meta info (DONE)
 //- add player profiles
 //- animation of goals
 //- add filters
