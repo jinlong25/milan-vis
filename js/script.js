@@ -2,8 +2,6 @@
 var cv = {
   'width': 930,
   'height':780,
-  // 'width': 610,
-  // 'height': 520,
 	'top': 50,
 	'right': 10,
 	'bottom': 10,
@@ -42,29 +40,19 @@ var milan_players = [
   '1416'
 ];
 
-//create scale for soccer field##delete
-var xScaleField = d3.scaleLinear()
-  .domain([0, cv.width + cv.left + cv.right])
-  .range([0, cv.width + cv.left + cv.right]);
-
-var yScaleField = d3.scaleLinear()
-  .domain([0, cv.height + cv.top + cv.bottom])
-  .range([cv.height + cv.top + cv.bottom, 0]);
-
 //create scales for shot X/Y
 var xScaleUnderstat = d3.scaleLinear()
   .domain([0, 1])
-  .range([cv.height + 300, 0]);
+  .range([cv.height, 0]);
 
 var yScaleUnderstat = d3.scaleLinear()
   .domain([0, 1])
-  // .range([cv.height, 0]);
   .range([cv.width, 0]);
 
 //create a svg as main cavnas
 var svg = d3.select('#canvas').append('svg')
   .attr('width', cv.width + cv.left + cv.right)
-  .attr('height', cv.height + cv.top + cv.bottom + 500);//##recalibrate later
+  .attr('height', cv.height + cv.top + cv.bottom + 1000);
 
 //draw the soccer field in svg
 //draw field background
@@ -72,26 +60,60 @@ svg.append('rect')
   .attr('x', 0)
   .attr('y', 0)
   .attr('width', cv.width + cv.top + cv.right)
-  .attr('height', cv.height + cv.top + cv.bottom)
+  .attr('height', cv.height + cv.top + cv.bottom + 1000)
   .attr('fill', '#222222')
   .attr('fill-opacity', 0.9);
 
 drawFieldLines();
 
 //read in the data from csv
-d3.csv('data/data-backup.csv').then(
+d3.csv('data/data.csv').then(
   function(data) {
-    // console.log(data);
-    
+
     //filter goals
     // var selectedShots = data.filter(isAMilanGoal);
     // var selectedShots = data;
     var selectedPlayerId = '7193'
     var selectedShots = data.filter(function(obj) {
-      return obj.player_id == selectedPlayerId;
+      return obj.player_id == selectedPlayerId || obj.player_id == '11111';
     });
 
-    console.log(selectedShots);
+    var selectedShotsCoord = Object.keys(selectedShots).map((key) => [xScaleUnderstat(parseFloat(selectedShots[key].Y)), yScaleUnderstat(parseFloat(selectedShots[key].X))]);
+    console.log(selectedShotsCoord);
+
+    var color = d3.scaleSequential(d3.interpolateLab("white", "steelblue"))
+        .domain([0, 3]);
+
+    var hexbin = d3.hexbin()
+    // .size([1000, 30])
+        .radius(30)
+        .extent([[0, 0], [cv.width, cv.height]]);
+        // .extent([[cv.left, cv.top], [(cv.height + cv.top), (cv.width + cv.left)]]);
+        // .extent([[10, 50], [50, 60]]);
+        // .extent([[cv.top, cv.left], [cv.height + cv.top, cv.width + cv.left]]);
+
+    svg.append("clipPath")
+        .attr("id", "clip")
+        .append("rect")
+        .attr('transform', 'translate(' + cv.left + ', ' + cv.top + ')')
+        .attr("width", cv.width)
+        .attr("height", cv.height);
+
+    svg.append("g")
+        .attr("class", "hexagon")
+        .attr('transform', 'translate(' + cv.left + ', ' + cv.top + ')')
+        // .attr("clip-path", "url(#clip)")
+        .selectAll("path")
+        .data(hexbin(selectedShotsCoord))
+        .enter().append("path")
+        .attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; })
+        .attr("d", hexbin.hexagon())
+        .attr("fill", function(d) {
+          return color(d.length);
+        });
+
+          console.log(hexbin.extent());
+
 
     //plot all goals
     svg.append('g')
@@ -137,7 +159,7 @@ d3.csv('data/data-backup.csv').then(
         } else if (d.X == '1' && d.Y == '1') {
           return 'red';
         } else {
-          return 'pink';
+          return 'yellow';
         }
       })
       .attr('stroke-width', 1.2)
@@ -147,7 +169,8 @@ d3.csv('data/data-backup.csv').then(
     d3.selectAll('.goal').on('mouseover', function(d){
       var thisGoal = d3.select(this);
       console.log(thisGoal.attr('data-player') + ' ' + thisGoal.attr('data-h_team') + ' vs ' + thisGoal.attr('data-a_team'));
-      console.log(thisGoal.attr('data-X') + ', ' + thisGoal.attr('data-Y'))
+      console.log(thisGoal.attr('data-X') + ', ' + thisGoal.attr('data-Y'));
+      console.log(yScaleUnderstat(thisGoal.attr('data-X')) + ', ' + xScaleUnderstat(thisGoal.attr('data-Y')));
     });
 
   }
@@ -254,8 +277,7 @@ function drawFieldLines() {
     .attr('y2', 60)
     .attr('stroke-width', cv.fieldLineWidth)
     .attr('stroke', '#ffffff');
-}
-
+};
 
 //add player profiles
 
