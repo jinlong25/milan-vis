@@ -1,0 +1,112 @@
+id,minute,result,X,Y,xG,player,h_a,player_id,situation,season,shotType,match_id,h_team,a_team,h_goals,a_goals,date,player_assisted,lastAction
+9999,55,Goal,0,0,0.469196558,Jinlong Yang,h,11111,OpenPlay,2021,RightFoot,17121,AC Milan,Atalanta,2,0,5/15/22 16:00,Junior Messias,Throughball
+9999,55,Goal,1,0,0.469196558,Jinlong Yang,h,11111,OpenPlay,2021,RightFoot,17121,AC Milan,Atalanta,2,0,5/15/22 16:00,Junior Messias,Throughball
+9999,55,Goal,0,1,0.469196558,Jinlong Yang,h,11111,OpenPlay,2021,RightFoot,17121,AC Milan,Atalanta,2,0,5/15/22 16:00,Junior Messias,Throughball
+9999,55,Goal,1,1,0.469196558,Jinlong Yang,h,11111,OpenPlay,2021,RightFoot,17121,AC Milan,Atalanta,2,0,5/15/22 16:00,Junior Messias,Throughball
+464196,58,Goal,0.815,0.469000015,0.066364259,Ismael Bennacer,a,6981,OpenPlay,2021,LeftFoot,17047,Cagliari,AC Milan,0,1,3/19/22 19:45,Olivier Giroud,LayOff
+448003,91,Goal,0.920999985,0.482000008,0.511852324,Zlatan Ibrahimovic,a,1741,OpenPlay,2021,RightFoot,16924,Udinese,AC Milan,1,1,12/11/21 19:45,,None
+476545,16,BlockedShot,0.854000015,0.590999985,0.070837654,Theo Hernández,h,2547,OpenPlay,2021,RightFoot,17121,AC Milan,Atalanta,2,0,5/15/22 16:00,,BallRecovery
+476546,17,MissedShots,0.705,0.467000008,0.013253063,Sandro Tonali,h,7958,OpenPlay,2021,RightFoot,17121,AC Milan,Atalanta,2,0,5/15/22 16:00,Rade Krunic,Pass
+476547,20,SavedShot,0.894000015,0.719000015,0.041052718,Rafael Leão,h,7193,OpenPlay,2021,RightFoot,17121,AC Milan,Atalanta,2,0,5/15/22 16:00,Rade Krunic,Pass
+476550,34,SavedShot,0.798000031,0.317999992,0.021480758,Alexis Saelemaekers,h,8297,OpenPlay,2021,RightFoot,17121,AC Milan,Atalanta,2,0,5/15/22 16:00,Davide Calabria,Pass
+476552,41,MissedShots,0.819000015,0.542999992,0.06390398,Rafael Leão,h,7193,OpenPlay,2021,RightFoot,17121,AC Milan,Atalanta,2,0,5/15/22 16:00,Alexis Saelemaekers,Pass
+476553,44,BlockedShot,0.749000015,0.605,0.016587358,Rafael Leão,h,7193,OpenPlay,2021,RightFoot,17121,AC Milan,Atalanta,2,0,5/15/22 16:00,,None
+476555,53,MissedShots,0.741999969,0.704000015,0.040182516,Theo Hernández,h,2547,DirectFreekick,2021,LeftFoot,17121,AC Milan,Atalanta,2,0,5/15/22 16:00,,Standard
+476556,55,Goal,0.885,0.357000008,0.469196558,Rafael Leão,h,7193,OpenPlay,2021,RightFoot,17121,AC Milan,Atalanta,2,0,5/15/22 16:00,Junior Messias,Throughball
+476559,68,BlockedShot,0.819000015,0.641999969,0.049047984,Ante Rebic,h,1852,OpenPlay,2021,RightFoot,17121,AC Milan,Atalanta,2,0,5/15/22 16:00,Rafael Leão,TakeOn
+476561,74,Goal,0.879000015,0.630999985,0.131764501,Theo Hernández,h,2547,OpenPlay,2021,LeftFoot,17121,AC Milan,Atalanta,2,0,5/15/22 16:00,Rade Krunic,BallRecovery
+476562,82,SavedShot,0.766999969,0.449000015,0.078503922,Junior Messias,h,8838,OpenPlay,2021,LeftFoot,17121,AC Milan,Atalanta,2,0,5/15/22 16:00,Rafael Leão,Pass
+476563,84,SavedShot,0.901999969,0.460999985,0.53774631,Ante Rebic,h,1852,OpenPlay,2021,RightFoot,17121,AC Milan,Atalanta,2,0,5/15/22 16:00,,None
+476548,27,MissedShots,0.888000031,0.392000008,0.055384994,José Luis Palomino,a,4733,FromCorner,2021,LeftFoot,17121,AC Milan,Atalanta,2,0,5/15/22 16:00,Berat Gjimshiti,BallTouch
+476549,30,SavedShot,0.75,0.464000015,0.02284785,Luis Muriel,a,1229,OpenPlay,2021,RightFoot,17121,AC Milan,Atalanta,2,0,5/15/22 16:00,Hans Hateboer,Pass
+476551,37,MissedShots,0.791999969,0.66,0.028691314,Davide Zappacosta,a,1178,OpenPlay,2021,RightFoot,17121,AC Milan,Atalanta,2,0,5/15/22 16:00,Matteo Pessina,TakeOn
+476554,46,BlockedShot,0.876999969,0.678000031,0.05827513,Davide Zappacosta,a,1178,OpenPlay,2021,RightFoot,17121,AC Milan,Atalanta,2,0,5/15/22 16:00,Luis Muriel,Pass
+476557,60,MissedShots,0.878000031,0.450999985,0.067478351,Duván Zapata,a,1148,OpenPlay,2021,RightFoot,17121,AC Milan,Atalanta,2,0,5/15/22 16:00,,Dispossessed
+476558,67,MissedShots,0.92,0.584000015,0.064299278,Hans Hateboer,a,4941,FromCorner,2021,RightFoot,17121,AC Milan,Atalanta,2,0,5/15/22 16:00,Ruslan Malinovskiy,Cross
+476560,70,MissedShots,0.911999969,0.532999992,0.276356637,Duván Zapata,a,1148,FromCorner,2021,Head,17121,AC Milan,Atalanta,2,0,5/15/22 16:00,Ruslan Malinovskiy,Cross
+476564,85,BlockedShot,0.880999985,0.387999992,0.087070219,Jeremie Boga,a,3544,OpenPlay,2021,RightFoot,17121,AC Milan,Atalanta,2,0,5/15/22 16:00,Duván Zapata,Pass
+476565,85,SavedShot,0.915,0.63,0.05874265,Duván Zapata,a,1148,OpenPlay,2021,RightFoot,17121,AC Milan,Atalanta,2,0,5/15/22 16:00,,None
+476566,87,BlockedShot,0.811999969,0.342000008,0.035823543,Teun Koopmeiners,a,9969,OpenPlay,2021,LeftFoot,17121,AC Milan,Atalanta,2,0,5/15/22 16:00,Ruslan Malinovskiy,Pass
+476567,87,MissedShots,0.924000015,0.382000008,0.013728628,Duván Zapata,a,1148,FromCorner,2021,Head,17121,AC Milan,Atalanta,2,0,5/15/22 16:00,Teun Koopmeiners,Aerial
+476568,92,MissedShots,0.730999985,0.612000008,0.0107925,Ruslan Malinovskiy,a,7947,OpenPlay,2021,LeftFoot,17121,AC Milan,Atalanta,2,0,5/15/22 16:00,Duván Zapata,Pass
+474557,11,SavedShot,0.8,0.731999969,0.015878791,Giovanni Simeone,h,1102,OpenPlay,2021,RightFoot,17108,Verona,AC Milan,1,3,5/8/22 18:45,Adrien Tameze,Chipped
+474562,22,MissedShots,0.87,0.477999992,0.079450682,Gianluca Caprari,h,1170,OpenPlay,2021,RightFoot,17108,Verona,AC Milan,1,3,5/8/22 18:45,Marco Faraoni,Cross
+474563,24,SavedShot,0.835,0.487999992,0.077767223,Giovanni Simeone,h,1102,OpenPlay,2021,LeftFoot,17108,Verona,AC Milan,1,3,5/8/22 18:45,Adrien Tameze,Pass
+474566,34,MissedShots,0.858000031,0.357999992,0.063278012,Giovanni Simeone,h,1102,OpenPlay,2021,RightFoot,17108,Verona,AC Milan,1,3,5/8/22 18:45,Antonin Barak,Pass
+474567,37,Goal,0.966999969,0.472000008,0.632286489,Marco Faraoni,h,3978,OpenPlay,2021,Head,17108,Verona,AC Milan,1,3,5/8/22 18:45,Darko Lazovic,Cross
+474573,58,MissedShots,0.813000031,0.490999985,0.053971369,Adrien Tameze,h,5996,OpenPlay,2021,RightFoot,17108,Verona,AC Milan,1,3,5/8/22 18:45,Gianluca Caprari,Pass
+474576,73,BlockedShot,0.865,0.656999969,0.031352412,Gianluca Caprari,h,1170,OpenPlay,2021,RightFoot,17108,Verona,AC Milan,1,3,5/8/22 18:45,Adrien Tameze,Cross
+474577,74,MissedShots,0.905999985,0.517999992,0.038990069,Kevin Lasagna,h,1903,OpenPlay,2021,Head,17108,Verona,AC Milan,1,3,5/8/22 18:45,Darko Lazovic,Aerial
+474578,77,BlockedShot,0.869000015,0.385,0.059822809,Gianluca Caprari,h,1170,OpenPlay,2021,RightFoot,17108,Verona,AC Milan,1,3,5/8/22 18:45,,BallRecovery
+474580,81,MissedShots,0.906999969,0.477999992,0.026947077,Koray Günter,h,7092,FromCorner,2021,Head,17108,Verona,AC Milan,1,3,5/8/22 18:45,Gianluca Caprari,Aerial
+474555,5,MissedShots,0.750999985,0.705999985,0.017222324,Rafael Leão,a,7193,OpenPlay,2021,RightFoot,17108,Verona,AC Milan,1,3,5/8/22 18:45,Theo Hernández,Pass
+474556,7,MissedShots,0.691999969,0.542000008,0.008583019,Theo Hernández,a,2547,OpenPlay,2021,LeftFoot,17108,Verona,AC Milan,1,3,5/8/22 18:45,Rafael Leão,TakeOn
+474558,13,SavedShot,0.895999985,0.515,0.040025756,Rade Krunic,a,1311,OpenPlay,2021,Head,17108,Verona,AC Milan,1,3,5/8/22 18:45,Alexis Saelemaekers,Aerial
+474559,13,BlockedShot,0.915,0.472000008,0.092753358,Olivier Giroud,a,502,FromCorner,2021,RightFoot,17108,Verona,AC Milan,1,3,5/8/22 18:45,Rade Krunic,Cross
+474560,18,SavedShot,0.909000015,0.395999985,0.37939176,Davide Calabria,a,1574,OpenPlay,2021,RightFoot,17108,Verona,AC Milan,1,3,5/8/22 18:45,Sandro Tonali,Pass
+474561,21,SavedShot,0.916999969,0.535999985,0.035711095,Olivier Giroud,a,502,FromCorner,2021,Head,17108,Verona,AC Milan,1,3,5/8/22 18:45,Theo Hernández,Aerial
+474564,26,MissedShots,0.821999969,0.34,0.037506282,Rade Krunic,a,1311,OpenPlay,2021,RightFoot,17108,Verona,AC Milan,1,3,5/8/22 18:45,Alexis Saelemaekers,Pass
+474565,27,MissedShots,0.770999985,0.485,0.028554086,Alexis Saelemaekers,a,8297,OpenPlay,2021,LeftFoot,17108,Verona,AC Milan,1,3,5/8/22 18:45,,None
+474568,40,BlockedShot,0.784000015,0.407000008,0.029524919,Davide Calabria,a,1574,OpenPlay,2021,LeftFoot,17108,Verona,AC Milan,1,3,5/8/22 18:45,,None
+474569,43,BlockedShot,0.764000015,0.389000015,0.023381704,Alexis Saelemaekers,a,8297,OpenPlay,2021,RightFoot,17108,Verona,AC Milan,1,3,5/8/22 18:45,Franck Kessié,Pass
+474570,47,Goal,0.971999969,0.499000015,0.915009916,Sandro Tonali,a,7958,OpenPlay,2021,LeftFoot,17108,Verona,AC Milan,1,3,5/8/22 18:45,Rafael Leão,Pass
+474571,48,Goal,0.979000015,0.477999992,0.967504144,Sandro Tonali,a,7958,OpenPlay,2021,RightFoot,17108,Verona,AC Milan,1,3,5/8/22 18:45,Rafael Leão,Pass
+474572,54,MissedShots,0.9,0.457000008,0.031602625,Fikayo Tomori,a,703,SetPiece,2021,Head,17108,Verona,AC Milan,1,3,5/8/22 18:45,Theo Hernández,Aerial
+474574,63,BlockedShot,0.785,0.524000015,0.072640069,Franck Kessié,a,1489,OpenPlay,2021,LeftFoot,17108,Verona,AC Milan,1,3,5/8/22 18:45,Rafael Leão,Pass
+474575,64,SavedShot,0.916999969,0.679000015,0.082432382,Rafael Leão,a,7193,OpenPlay,2021,RightFoot,17108,Verona,AC Milan,1,3,5/8/22 18:45,Ante Rebic,Pass
+474579,79,SavedShot,0.738000031,0.305,0.017281564,Davide Calabria,a,1574,OpenPlay,2021,RightFoot,17108,Verona,AC Milan,1,3,5/8/22 18:45,,BallRecovery
+474581,85,Goal,0.889000015,0.33,0.079374395,Alessandro Florenzi,a,1254,OpenPlay,2021,RightFoot,17108,Verona,AC Milan,1,3,5/8/22 18:45,Junior Messias,Pass
+474582,90,MissedShots,0.845999985,0.420999985,0.266560167,Junior Messias,a,8838,OpenPlay,2021,LeftFoot,17108,Verona,AC Milan,1,3,5/8/22 18:45,Ante Rebic,Pass
+472110,11,MissedShots,0.964000015,0.645,0.302973539,Theo Hernández,h,2547,OpenPlay,2021,LeftFoot,17100,AC Milan,Fiorentina,1,0,5/1/22 13:00,,None
+472111,13,MissedShots,0.925999985,0.614000015,0.108345836,Olivier Giroud,h,502,SetPiece,2021,Head,17100,AC Milan,Fiorentina,1,0,5/1/22 13:00,Sandro Tonali,Cross
+472114,29,BlockedShot,0.901999969,0.684000015,0.063605219,Rafael Leão,h,7193,OpenPlay,2021,RightFoot,17100,AC Milan,Fiorentina,1,0,5/1/22 13:00,Brahim Diaz,Pass
+472115,32,MissedShots,0.788000031,0.545,0.035550393,Franck Kessié,h,1489,OpenPlay,2021,RightFoot,17100,AC Milan,Fiorentina,1,0,5/1/22 13:00,Olivier Giroud,None
+472116,41,BlockedShot,0.798000031,0.457000008,0.033605166,Davide Calabria,h,1574,SetPiece,2021,RightFoot,17100,AC Milan,Fiorentina,1,0,5/1/22 13:00,,None
+472117,41,MissedShots,0.806999969,0.457000008,0.038378138,Davide Calabria,h,1574,OpenPlay,2021,RightFoot,17100,AC Milan,Fiorentina,1,0,5/1/22 13:00,,Rebound
+472118,44,BlockedShot,0.815999985,0.69,0.025038419,Rafael Leão,h,7193,OpenPlay,2021,RightFoot,17100,AC Milan,Fiorentina,1,0,5/1/22 13:00,Franck Kessié,Pass
+472120,47,MissedShots,0.901999969,0.512000008,0.461539477,Rafael Leão,h,7193,OpenPlay,2021,RightFoot,17100,AC Milan,Fiorentina,1,0,5/1/22 13:00,Olivier Giroud,TakeOn
+472122,51,BlockedShot,0.86,0.494000015,0.077487744,Olivier Giroud,h,502,SetPiece,2021,RightFoot,17100,AC Milan,Fiorentina,1,0,5/1/22 13:00,Davide Calabria,BallTouch
+472123,51,SavedShot,0.956999969,0.705,0.047193032,Franck Kessié,h,1489,SetPiece,2021,LeftFoot,17100,AC Milan,Fiorentina,1,0,5/1/22 13:00,Olivier Giroud,Chipped
+472124,52,MissedShots,0.92,0.658000031,0.27099362,Theo Hernández,h,2547,OpenPlay,2021,LeftFoot,17100,AC Milan,Fiorentina,1,0,5/1/22 13:00,Sandro Tonali,Pass
+472126,81,Goal,0.88,0.632000008,0.072282203,Rafael Leão,h,7193,OpenPlay,2021,RightFoot,17100,AC Milan,Fiorentina,1,0,5/1/22 13:00,,BallRecovery
+472128,86,MissedShots,0.905999985,0.400999985,0.013279237,Zlatan Ibrahimovic,h,1741,SetPiece,2021,Head,17100,AC Milan,Fiorentina,1,0,5/1/22 13:00,Theo Hernández,Aerial
+472108,0,BlockedShot,0.949000015,0.505999985,0.148346871,Arthur Cabral,a,10377,OpenPlay,2021,RightFoot,17100,AC Milan,Fiorentina,1,0,5/1/22 13:00,Nicolás González,LayOff
+472109,10,MissedShots,0.855999985,0.397000008,0.038436137,Igor Julio,a,7943,FromCorner,2021,LeftFoot,17100,AC Milan,Fiorentina,1,0,5/1/22 13:00,Cristiano Biraghi,Cross
+472112,20,SavedShot,0.846999969,0.668000031,0.040366508,Riccardo Saponara,a,1313,OpenPlay,2021,RightFoot,17100,AC Milan,Fiorentina,1,0,5/1/22 13:00,Alfred Duncan,Pass
+472113,23,BlockedShot,0.9,0.484000015,0.133673027,Nicolás González,a,7074,OpenPlay,2021,LeftFoot,17100,AC Milan,Fiorentina,1,0,5/1/22 13:00,Youssef Maleh,Pass
+472119,45,BlockedShot,0.659000015,0.4,0.011263567,Nicolás González,a,7074,OpenPlay,2021,LeftFoot,17100,AC Milan,Fiorentina,1,0,5/1/22 13:00,Sofyan Amrabat,Pass
+472121,48,BlockedShot,0.805,0.610999985,0.039447933,Sofyan Amrabat,a,7927,OpenPlay,2021,RightFoot,17100,AC Milan,Fiorentina,1,0,5/1/22 13:00,Riccardo Saponara,Pass
+472125,75,SavedShot,0.948000031,0.572000008,0.060978107,Arthur Cabral,a,10377,OpenPlay,2021,Head,17100,AC Milan,Fiorentina,1,0,5/1/22 13:00,Cristiano Biraghi,Aerial
+472127,85,MissedShots,0.794000015,0.485999985,0.043519333,Lucas Martínez Quarta,a,9019,OpenPlay,2021,RightFoot,17100,AC Milan,Fiorentina,1,0,5/1/22 13:00,Arthur Cabral,HeadPass
+470857,3,Goal,0.945,0.487999992,0.566908896,Ciro Immobile,h,1209,OpenPlay,2021,LeftFoot,17091,Lazio,AC Milan,1,2,4/24/22 18:45,Sergej Milinkovic-Savic,Cross
+470860,23,SavedShot,0.835,0.69,0.048659563,Luis Alberto,h,1219,OpenPlay,2021,RightFoot,17091,Lazio,AC Milan,1,2,4/24/22 18:45,,None
+470863,29,MissedShots,0.755,0.34,0.024686933,Manuel Lazzari,h,6180,OpenPlay,2021,RightFoot,17091,Lazio,AC Milan,1,2,4/24/22 18:45,Thomas Strakosha,Pass
+470865,33,BlockedShot,0.761999969,0.489000015,0.035688072,Luis Alberto,h,1219,OpenPlay,2021,RightFoot,17091,Lazio,AC Milan,1,2,4/24/22 18:45,Sergej Milinkovic-Savic,Pass
+470880,65,MissedShots,0.9,0.590999985,0.01319803,Francesco Acerbi,h,1463,FromCorner,2021,Head,17091,Lazio,AC Milan,1,2,4/24/22 18:45,Danilo Cataldi,Aerial
+470881,68,MissedShots,0.7,0.276000004,0.010576508,Sergej Milinkovic-Savic,h,1543,OpenPlay,2021,RightFoot,17091,Lazio,AC Milan,1,2,4/24/22 18:45,Manuel Lazzari,Pass
+470883,74,BlockedShot,0.816999969,0.394000015,0.053532194,Sergej Milinkovic-Savic,h,1543,OpenPlay,2021,LeftFoot,17091,Lazio,AC Milan,1,2,4/24/22 18:45,Francesco Acerbi,LayOff
+470858,8,BlockedShot,0.790999985,0.735,0.053125545,Sandro Tonali,a,7958,DirectFreekick,2021,RightFoot,17091,Lazio,AC Milan,1,2,4/24/22 18:45,,Standard
+470859,16,MissedShots,0.929000015,0.454000015,0.059178457,Olivier Giroud,a,502,OpenPlay,2021,Head,17091,Lazio,AC Milan,1,2,4/24/22 18:45,Junior Messias,Chipped
+470861,27,MissedShots,0.919000015,0.665999985,0.068397373,Rafael Leão,a,7193,OpenPlay,2021,LeftFoot,17091,Lazio,AC Milan,1,2,4/24/22 18:45,Franck Kessié,Pass
+470862,28,SavedShot,0.911999969,0.658000031,0.067749172,Franck Kessié,a,1489,OpenPlay,2021,LeftFoot,17091,Lazio,AC Milan,1,2,4/24/22 18:45,Rafael Leão,Pass
+470864,31,SavedShot,0.806999969,0.746999969,0.016977217,Rafael Leão,a,7193,OpenPlay,2021,RightFoot,17091,Lazio,AC Milan,1,2,4/24/22 18:45,Pierre Kalulu Kyatengwa,BallRecovery
+470866,36,MissedShots,0.956999969,0.530999985,0.068439581,Olivier Giroud,a,502,OpenPlay,2021,Head,17091,Lazio,AC Milan,1,2,4/24/22 18:45,Davide Calabria,Aerial
+470867,36,BlockedShot,0.791999969,0.705,0.022114554,Rafael Leão,a,7193,OpenPlay,2021,RightFoot,17091,Lazio,AC Milan,1,2,4/24/22 18:45,Brahim Diaz,Pass
+470868,37,BlockedShot,0.905999985,0.442000008,0.086828619,Sandro Tonali,a,7958,OpenPlay,2021,RightFoot,17091,Lazio,AC Milan,1,2,4/24/22 18:45,Junior Messias,HeadPass
+470869,37,BlockedShot,0.858000031,0.495999985,0.029186247,Brahim Diaz,a,6421,FromCorner,2021,LeftFoot,17091,Lazio,AC Milan,1,2,4/24/22 18:45,,Aerial
+470870,43,SavedShot,0.755,0.73,0.040802177,Theo Hernández,a,2547,DirectFreekick,2021,LeftFoot,17091,Lazio,AC Milan,1,2,4/24/22 18:45,,Standard
+470871,46,BlockedShot,0.856999969,0.372999992,0.062076952,Olivier Giroud,a,502,OpenPlay,2021,LeftFoot,17091,Lazio,AC Milan,1,2,4/24/22 18:45,Brahim Diaz,Pass
+470872,46,BlockedShot,0.858000031,0.482000008,0.06702967,Junior Messias,a,8838,OpenPlay,2021,RightFoot,17091,Lazio,AC Milan,1,2,4/24/22 18:45,,Rebound
+470873,49,Goal,0.953000031,0.527999992,0.597882748,Olivier Giroud,a,502,OpenPlay,2021,LeftFoot,17091,Lazio,AC Milan,1,2,4/24/22 18:45,Rafael Leão,Pass
+470874,56,MissedShots,0.9,0.430999985,0.06509757,Fikayo Tomori,a,703,SetPiece,2021,Head,17091,Lazio,AC Milan,1,2,4/24/22 18:45,Theo Hernández,Cross
+470875,58,BlockedShot,0.859000015,0.475999985,0.067624755,Brahim Diaz,a,6421,FromCorner,2021,RightFoot,17091,Lazio,AC Milan,1,2,4/24/22 18:45,,None
+470876,58,MissedShots,0.956999969,0.392000008,0.241033077,Junior Messias,a,8838,FromCorner,2021,LeftFoot,17091,Lazio,AC Milan,1,2,4/24/22 18:45,Rafael Leão,Cross
+470877,60,BlockedShot,0.744000015,0.695,0.014914822,Rafael Leão,a,7193,OpenPlay,2021,RightFoot,17091,Lazio,AC Milan,1,2,4/24/22 18:45,Fikayo Tomori,TakeOn
+470878,61,MissedShots,0.9,0.33,0.059931297,Junior Messias,a,8838,OpenPlay,2021,LeftFoot,17091,Lazio,AC Milan,1,2,4/24/22 18:45,Pierre Kalulu Kyatengwa,GoodSkill
+470879,64,MissedShots,0.594000015,0.805999985,0.00772363,Rafael Leão,a,7193,OpenPlay,2021,RightFoot,17091,Lazio,AC Milan,1,2,4/24/22 18:45,,BallRecovery
+470882,69,SavedShot,0.733000031,0.698000031,0.010605021,Zlatan Ibrahimovic,a,1741,OpenPlay,2021,RightFoot,17091,Lazio,AC Milan,1,2,4/24/22 18:45,Sandro Tonali,Chipped
+470884,83,SavedShot,0.888000031,0.701999969,0.035589054,Rafael Leão,a,7193,OpenPlay,2021,LeftFoot,17091,Lazio,AC Milan,1,2,4/24/22 18:45,Ante Rebic,TakeOn
+470885,84,SavedShot,0.746999969,0.549000015,0.020822752,Ante Rebic,a,1852,OpenPlay,2021,LeftFoot,17091,Lazio,AC Milan,1,2,4/24/22 18:45,,Dispossessed
+470886,88,BlockedShot,0.88,0.404000015,0.05881029,Zlatan Ibrahimovic,a,1741,OpenPlay,2021,RightFoot,17091,Lazio,AC Milan,1,2,4/24/22 18:45,Theo Hernández,Cross
+470887,89,MissedShots,0.76,0.615,0.016684026,Theo Hernández,a,2547,FromCorner,2021,LeftFoot,17091,Lazio,AC Milan,1,2,4/24/22 18:45,,None
+470888,91,Goal,0.954000015,0.505,0.61878258,Sandro Tonali,a,7958,OpenPlay,2021,RightFoot,17091,Lazio,AC Milan,1,2,4/24/22 18:45,Zlatan Ibrahimovic,HeadPass
