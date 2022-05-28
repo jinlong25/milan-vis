@@ -64,9 +64,9 @@ var shotMap = d3.select('#shot_map').append('svg')
   .attr('height', sm.height + sm.top + sm.bottom + 300);//##
 
 //create a svg for xG slope
-var xG_slope = d3.select('#xG_slope').append('svg')
-.attr('width', xs.width + xs.left + xs.right)
-.attr('height', xs.height + xs.top + xs.bottom);
+// var xG_slope = d3.select('#xG_slope').append('svg')
+// .attr('width', xs.width + xs.left + xs.right)
+// .attr('height', xs.height + xs.top + xs.bottom);
 
 //draw the soccer field in svg
 //draw field background
@@ -81,7 +81,7 @@ shotMap.append('rect')
 drawFieldLines();
 
 //read in the data from csv
-d3.csv('data/data-all.csv').then(
+d3.csv('data/data-test.csv').then(
   function(data) {
     //get data for xG slope
     var xGSlopeData = data.filter(isAMilanShot);
@@ -126,7 +126,8 @@ function drawShotmap(data) {
   var hexbin = d3.hexbin()
   // .size([1000, 30])
       .radius(30)
-      .extent([[0, 0], [sm.width, sm.height]]);
+      // .extent([[0, 0], [sm.width, sm.height]]);
+      .size([sm.width, sm.height]);
       // .extent([[sm.left, sm.top], [(sm.height + sm.top), (sm.width + sm.left)]]);
       // .extent([[10, 50], [50, 60]]);
       // .extent([[sm.top, sm.left], [sm.height + sm.top, sm.width + sm.left]]);
@@ -145,8 +146,9 @@ function drawShotmap(data) {
       .selectAll("path")
       .data(hexbin(selectedShotsCoord))
       .enter().append("path")
-      .attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; })
-      .attr("d", hexbin.hexagon())
+      // .attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; })
+      // .attr("d", hexbin.hexagon())
+      .attr("d", d => `M${d.x},${d.y}${hexbin.hexagon()}`)
       .attr("fill", function(d) {
         return color(d.length);
       });
