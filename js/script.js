@@ -9,6 +9,7 @@ var sm = {
   'fieldLineWidth': 2
 };
 
+//create a namespace for xG slope
 var xs = {
   'width': 930,
   'height': 780,
@@ -18,143 +19,102 @@ var xs = {
   'left': 50,
 }
 
-var milan_players = [
-  '7193',
-  '502',
-  '1741',
-  '8838',
-  '2547',
-  '7958',
-  '8297',
-  '1574',
-  '1489',
-  '1852',
-  '6421',
-  '1254',
-  '6981',
-  '1119',
-  '1311',
-  '703',
-  '1471',
-  '4699',
-  '3429',
-  '8163',
-  '2303',
-  '4920',
-  '8313',
-  '1547',
-  '5803',
-  '9440',
-  '3737',
-  '1416'
+var milan_players = [ '7193', '502', '1741', '8838', '2547', '7958', '8297',
+  '1574', '1489', '1852', '6421', '1254', '6981', '1119', '1311', '703',
+  '1471', '4699', '3429', '8163', '2303', '4920', '8313', '1547', '5803',
+  '9440', '3737', '1416'
 ];
-
-//create scales for shot X/Y
-sm.xScaleUnderstat = d3.scaleLinear()
-  .domain([0, 1])
-  .range([sm.height, 0]);
-
-sm.yScaleUnderstat = d3.scaleLinear()
-  .domain([0, 1])
-  .range([sm.width, 0]);
-
-//create a svg for shot map
-var shotMap = d3.select('#shot_map').append('svg')
-  .attr('width', sm.width + sm.left + sm.right)
-  .attr('height', sm.height + sm.top + sm.bottom + 300);//##
 
 //create a svg for xG slope
 // var xG_slope = d3.select('#xG_slope').append('svg')
 // .attr('width', xs.width + xs.left + xs.right)
 // .attr('height', xs.height + xs.top + xs.bottom);
 
-//draw the soccer field in svg
-//draw field background
-shotMap.append('rect')
-  .attr('x', 0)
-  .attr('y', 0)
-  .attr('width', sm.width + sm.top + sm.right)
-  .attr('height', sm.height + sm.top + sm.bottom + 1000)
-  .attr('fill', '#222222')
-  .attr('fill-opacity', 0.9);
-
-drawFieldLines();
+//create a svg for shot map
+var shotMap = d3.select('#shot_map').append('svg')
+  .attr('width', sm.width + sm.left + sm.right)
+  .attr('height', sm.height + sm.top + sm.bottom);
 
 //read in the data from csv
-d3.csv('data/data-test.csv').then(
+d3.csv('data/data.csv').then(
   function(data) {
     //get data for xG slope
     var xGSlopeData = data.filter(isAMilanShot);
+    // console.log(xGSlopeData);
 
-    console.log(xGSlopeData);
-
-
+    //draw shot map
     drawShotmap(data);
   }
 );
 
-function isAGoal(obj) {
-  return obj.result == 'Goal';
-  // return obj.result == 'Goal' || obj.result == 'OwnGoal'
-};
-
-function isAMilanGoal(obj) {
-  return obj.result == 'Goal' && milan_players.includes(obj.player_id);
-  // return obj.result == 'Goal' || obj.result == 'OwnGoal'
-};
-
 function isAMilanShot(obj) {
-  return milan_players.includes(obj.player_id);
+  return milan_players.includes(obj.player_id) && obj.result !== 'OwnGoal';
 };
 
 function drawShotmap(data) {
 
+  //create scales for shot X/Y
+  sm.xScaleUnderstat = d3.scaleLinear()
+    .domain([0, 1])
+    .range([sm.height, 0]);
+
+  sm.yScaleUnderstat = d3.scaleLinear()
+    .domain([0, 1])
+    .range([sm.width, 0]);
+
+  //draw field background
+  shotMap.append('rect')
+    .attr('x', 0)
+    .attr('y', 0)
+    .attr('width', sm.width + sm.top + sm.right)
+    .attr('height', sm.height + sm.top + sm.bottom)
+    .attr('fill', '#222222')
+    .attr('fill-opacity', 0.9);
+
+  //draw soccer field
+  drawFieldLines();
+
   //filter goals
-  // var selectedShots = data.filter(isAMilanGoal);
-  // var selectedShots = data;
-  var selectedPlayerId = '7193'
+  var selectedPlayerId = '7193'// Leao
   var selectedShots = data.filter(function(obj) {
-    return obj.player_id == selectedPlayerId || obj.player_id == '11111';
+    // return true;
+    // return obj.player_id == selectedPlayerId || obj.player_id == '11111';
+    // return obj.player_id == '11111';
+    return obj.player_id == selectedPlayerId;
+    // return milan_players.includes(obj.player_id);
   });
 
-  var selectedShotsCoord = Object.keys(selectedShots).map((key) => [sm.xScaleUnderstat(parseFloat(selectedShots[key].Y)), sm.yScaleUnderstat(parseFloat(selectedShots[key].X))]);
-  console.log(selectedShotsCoord);
+  //convert understat data to list of coord of shoots. This will be fed to hexbin
+  var selectedShotsCoord = Object.keys(selectedShots)
+    .map((key) => [
+      sm.yScaleUnderstat(parseFloat(selectedShots[key].Y)),
+      sm.xScaleUnderstat(parseFloat(selectedShots[key].X))
+      ]
+    );
 
-  var color = d3.scaleSequential(d3.interpolateLab("white", "steelblue"))
-      .domain([0, 3]);
+  //define color scale
+  var color = d3.scaleSequential(d3.interpolateLab('white', 'steelblue'))
+      .domain([0, 4]);
 
+  //define hexbin function
   var hexbin = d3.hexbin()
-  // .size([1000, 30])
-      .radius(30)
-      // .extent([[0, 0], [sm.width, sm.height]]);
-      .size([sm.width, sm.height]);
-      // .extent([[sm.left, sm.top], [(sm.height + sm.top), (sm.width + sm.left)]]);
-      // .extent([[10, 50], [50, 60]]);
-      // .extent([[sm.top, sm.left], [sm.height + sm.top, sm.width + sm.left]]);
+      .radius(15)
+      .extent([[0, 0], [sm.width, sm.height]]);
 
-  shotMap.append("clipPath")
-      .attr("id", "clip")
-      .append("rect")
+  //draw hexbins
+  shotMap.append('g')
+      .attr('class', 'hexbin')
       .attr('transform', 'translate(' + sm.left + ', ' + sm.top + ')')
-      .attr("width", sm.width)
-      .attr("height", sm.height);
-
-  shotMap.append("g")
-      .attr("class", "hexagon")
-      .attr('transform', 'translate(' + sm.left + ', ' + sm.top + ')')
-      // .attr("clip-path", "url(#clip)")
-      .selectAll("path")
+      .selectAll('path')
       .data(hexbin(selectedShotsCoord))
-      .enter().append("path")
-      // .attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; })
-      // .attr("d", hexbin.hexagon())
-      .attr("d", d => `M${d.x},${d.y}${hexbin.hexagon()}`)
-      .attr("fill", function(d) {
+      .enter().append('path')
+      .attr('transform', function(d) {
+        return 'translate(' + d.x + ',' + d.y + ')';
+      })
+      .attr('d', hexbin.hexagon())
+      .attr('fill', function(d) {
         return color(d.length);
       });
-
-        console.log(hexbin.extent());
-
 
   //plot all goals
   shotMap.append('g')
@@ -307,19 +267,3 @@ function drawFieldLines() {
     .attr('stroke-width', sm.fieldLineWidth)
     .attr('stroke', '#ffffff');
 };
-
-//add player profiles
-
-//add filters
-
-
-//to-do list
-//- plot field (DONE)
-//- rotate understat coordinate system (DONE)
-//- add meta info (DONE)
-//- add player profiles
-//- animation of goals
-//- add filters
-//- plot hexagon heatmap
-//- add youtube links
-//- xG map?
