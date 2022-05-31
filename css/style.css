@@ -8,7 +8,8 @@ svg {
     padding: 5 !important;
 }
 
-#player_selector>span {
+#player_selector>.badge {
   margin-right: 5px;
   margin-bottom: 5px;
+  font-size: 16px;
 }

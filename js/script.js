@@ -26,7 +26,8 @@ d3.select('#player_selector')
   .enter()
   .append('span')
   .attr('class', 'badge badge-dark')
-  .text(d => d.jersey_number + '-' + d.last_name);
+  .attr('data-us-player-id', d => d.understat_player_id)
+  .text(d => d.jersey_number + ' - ' + d.last_name);
 
 // <span class="badge badge-primary">Primary</span>
 
@@ -90,7 +91,7 @@ function drawShotmap(data) {
     // return obj.player_id == '11111';
     // return obj.player_id == selectedPlayerId;
     return milan_players.map(function(d) {
-      return d.understat_id;
+      return d.understat_player_id;
     }).includes(obj.player_id);
   });
 
