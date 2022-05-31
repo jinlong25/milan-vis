@@ -19,21 +19,27 @@ var xs = {
   'left': 50,
 }
 
-var milan_players = [ '7193', '502', '1741', '8838', '2547', '7958', '8297',
-  '1574', '1489', '1852', '6421', '1254', '6981', '1119', '1311', '703',
-  '1471', '4699', '3429', '8163', '2303', '4920', '8313', '1547', '5803',
-  '9440', '3737', '1416'
-];
+//create player selector badges
+d3.select('#player_selector')
+  .selectAll('span')
+  .data(milan_players)
+  .enter()
+  .append('span')
+  .attr('class', 'badge badge-dark')
+  .text(d => d.jersey_number + '-' + d.last_name);
 
-//create a svg for xG slope
-// var xG_slope = d3.select('#xG_slope').append('svg')
-// .attr('width', xs.width + xs.left + xs.right)
-// .attr('height', xs.height + xs.top + xs.bottom);
+// <span class="badge badge-primary">Primary</span>
+
 
 //create a svg for shot map
 var shotMap = d3.select('#shot_map').append('svg')
   .attr('width', sm.width + sm.left + sm.right)
   .attr('height', sm.height + sm.top + sm.bottom);
+
+//create a svg for xG slope
+// var xG_slope = d3.select('#xG_slope').append('svg')
+// .attr('width', xs.width + xs.left + xs.right)
+// .attr('height', xs.height + xs.top + xs.bottom);
 
 //read in the data from csv
 d3.csv('data/data.csv').then(
@@ -48,11 +54,12 @@ d3.csv('data/data.csv').then(
 );
 
 function isAMilanShot(obj) {
-  return milan_players.includes(obj.player_id) && obj.result !== 'OwnGoal';
+  return milan_players.map(function(d) {
+    return d.understat_id;
+  }).includes(obj.player_id) && obj.result !== 'OwnGoal';
 };
 
 function drawShotmap(data) {
-
   //create scales for shot X/Y
   sm.xScaleUnderstat = d3.scaleLinear()
     .domain([0, 1])
@@ -75,13 +82,16 @@ function drawShotmap(data) {
   drawFieldLines();
 
   //filter goals
-  var selectedPlayerId = '7193'// Leao
+  // var selectedPlayerId = '7193'// Leao
+  var selectedPlayerId = '502' //
   var selectedShots = data.filter(function(obj) {
     // return true;
     // return obj.player_id == selectedPlayerId || obj.player_id == '11111';
     // return obj.player_id == '11111';
-    return obj.player_id == selectedPlayerId;
-    // return milan_players.includes(obj.player_id);
+    // return obj.player_id == selectedPlayerId;
+    return milan_players.map(function(d) {
+      return d.understat_id;
+    }).includes(obj.player_id);
   });
 
   //convert understat data to list of coord of shoots. This will be fed to hexbin
@@ -149,20 +159,7 @@ function drawShotmap(data) {
     .attr('cy', d => sm.xScaleUnderstat(parseFloat(d.X)))
     .attr('cx', d => sm.yScaleUnderstat(parseFloat(d.Y)))
     .attr('fill-opacity', 0)
-    // .attr('stroke', '#FFFF00')
-    .attr('stroke', function(d){
-      if(d.X == '0' && d.Y == '0') {
-        return 'white';
-      } else if (d.X == '1' && d.Y == '0') {
-        return 'green';
-      } else if (d.X == '0' && d.Y == '1') {
-        return 'yellow';
-      } else if (d.X == '1' && d.Y == '1') {
-        return 'red';
-      } else {
-        return 'yellow';
-      }
-    })
+    .attr('stroke', 'yellow')
     .attr('stroke-width', 1.2)
     .attr('stroke-opacity', 1);
 

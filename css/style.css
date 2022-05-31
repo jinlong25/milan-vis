@@ -7,3 +7,8 @@ svg {
     margin: 0 !important;
     padding: 5 !important;
 }
+
+#player_selector>span {
+  margin-right: 5px;
+  margin-bottom: 5px;
+}
