@@ -25,15 +25,19 @@ d3.select('#player_selector')
   .data(milan_players)
   .enter()
   .append('span')
-  .attr('class', 'badge badge-dark')
+  .attr('class', 'badge badge-secondary')
   .attr('data-us-player-id', d => d.understat_player_id)
   .attr('data-first-name', d => d.first_name)
   .attr('data-last-name', d => d.last_name)
   .attr('data-jersey-number', d => d.jersey_number)
   .text(d => d.jersey_number + ' - ' + d.last_name);
 
-// <span class="badge badge-primary">Primary</span>
-
+//insert all sector badge
+d3.select('#player_selector')
+  .append('span').lower()
+  .attr('class', 'badge badge-secondary player-selector')
+  .attr('data-us-player-id', 'all')
+  .text('All Players');
 
 //create a svg for shot map
 var shotMap = d3.select('#shot_map').append('svg')
@@ -52,8 +56,77 @@ d3.csv('data/data.csv').then(
     var xGSlopeData = data.filter(isAMilanShot);
     // console.log(xGSlopeData);
 
-    //draw shot map
-    drawShotmap(data);
+    //DRAW SHOT MAP
+    //create scales for shot X/Y
+    sm.xScaleUnderstat = d3.scaleLinear()
+      .domain([0, 1])
+      .range([sm.height, 0]);
+
+    sm.yScaleUnderstat = d3.scaleLinear()
+      .domain([0, 1])
+      .range([sm.width, 0]);
+
+    //draw field background
+    shotMap.append('rect')
+      .attr('x', 0)
+      .attr('y', 0)
+      .attr('width', sm.width + sm.top + sm.right)
+      .attr('height', sm.height + sm.top + sm.bottom)
+      .attr('fill', '#222222')
+      .attr('fill-opacity', 0.9);
+
+    //draw soccer field
+    drawFieldLines();
+
+    //filter shots to milan players only
+    var selectedShots = data.filter(function(obj) {
+      return milan_players.map(function(d) {
+        return d.understat_player_id;
+      }).includes(obj.player_id);
+    });
+
+    //convert understat data to list of coord of shoots. This will be fed to hexbin
+    var selectedShotsCoord = Object.keys(selectedShots)
+      .map((key) => [
+          sm.yScaleUnderstat(parseFloat(selectedShots[key].Y)),
+          sm.xScaleUnderstat(parseFloat(selectedShots[key].X))
+        ]
+      );
+
+    //define color scale
+    var colorScale = d3.scaleSequential(d3.interpolateLab('white', 'steelblue'))
+        .domain([0, 4]);
+
+    //define hexbin function
+    var hexbin = d3.hexbin()
+        .radius(15)
+        .extent([[0, 0], [sm.width, sm.height]]);
+
+    //draw hexbins
+    drawHexbin(shotMap, selectedShotsCoord, hexbin, colorScale);
+
+    //plot all shots
+    drawShots(shotMap, selectedShots);
+
+    //add mouseover
+    addMouseOverToShots();
+
+    //add event listener to payer selector badges
+    d3.selectAll('#player_selector>.badge')
+      .on('click', function(d) {
+
+        //get selected player
+        var selectedPlayerId = d3.select(this).attr('data-us-player-id');
+        var selectedPlayer = d3.select(this).attr('data-last-name');
+        console.log(selectedPlayer +' selected');
+
+        //update selected badge
+        d3.selectAll('.player-selector').attr('class', 'badge badge-secondary player-selector');
+        d3.select(this).attr('class', 'badge badge-danger player-selector');
+
+        //update shot map function
+        updateShotMap(data, hexbin, colorScale, selectedPlayerId);
+      });
   }
 );
 
@@ -63,40 +136,23 @@ function isAMilanShot(obj) {
   }).includes(obj.player_id) && obj.result !== 'OwnGoal';
 };
 
-function drawShotmap(data) {
-  //create scales for shot X/Y
-  sm.xScaleUnderstat = d3.scaleLinear()
-    .domain([0, 1])
-    .range([sm.height, 0]);
+function updateShotMap(data, hexbin, colorScale, selectedPlayerId){
+  //remove shot dots and hexbin layer
+  d3.selectAll('.hexbin').remove();
+  d3.selectAll('.shots').remove();
 
-  sm.yScaleUnderstat = d3.scaleLinear()
-    .domain([0, 1])
-    .range([sm.width, 0]);
-
-  //draw field background
-  shotMap.append('rect')
-    .attr('x', 0)
-    .attr('y', 0)
-    .attr('width', sm.width + sm.top + sm.right)
-    .attr('height', sm.height + sm.top + sm.bottom)
-    .attr('fill', '#222222')
-    .attr('fill-opacity', 0.9);
-
-  //draw soccer field
-  drawFieldLines();
-
-  //filter goals
-  // var selectedPlayerId = '7193'// Leao
-  var selectedPlayerId = '502' //
-  var selectedShots = data.filter(function(obj) {
-    // return true;
-    // return obj.player_id == selectedPlayerId || obj.player_id == '11111';
-    // return obj.player_id == '11111';
-    // return obj.player_id == selectedPlayerId;
-    return milan_players.map(function(d) {
-      return d.understat_player_id;
-    }).includes(obj.player_id);
-  });
+  //filter shots by all players or selected player id
+  if (selectedPlayerId == 'all') {
+    var selectedShots = data.filter(function(obj) {
+      return milan_players.map(function(d) {
+        return d.understat_player_id;
+      }).includes(obj.player_id);
+    });
+  } else {
+    var selectedShots = data.filter(function(obj) {
+      return obj.player_id == selectedPlayerId;
+    })
+  }
 
   //convert understat data to list of coord of shoots. This will be fed to hexbin
   var selectedShotsCoord = Object.keys(selectedShots)
@@ -106,38 +162,24 @@ function drawShotmap(data) {
       ]
     );
 
-  //define color scale
-  var color = d3.scaleSequential(d3.interpolateLab('white', 'steelblue'))
-      .domain([0, 4]);
+  //redraw hexbins
+  drawHexbin(shotMap, selectedShotsCoord, hexbin, colorScale);
 
-  //define hexbin function
-  var hexbin = d3.hexbin()
-      .radius(15)
-      .extent([[0, 0], [sm.width, sm.height]]);
+  //re-plot all shots
+  drawShots(shotMap, selectedShots);
 
-  //draw hexbins
+  //add mouseover
+  addMouseOverToShots();
+}
+
+function drawShots(shotMap, selectedShots) {
   shotMap.append('g')
-      .attr('class', 'hexbin')
-      .attr('transform', 'translate(' + sm.left + ', ' + sm.top + ')')
-      .selectAll('path')
-      .data(hexbin(selectedShotsCoord))
-      .enter().append('path')
-      .attr('transform', function(d) {
-        return 'translate(' + d.x + ',' + d.y + ')';
-      })
-      .attr('d', hexbin.hexagon())
-      .attr('fill', function(d) {
-        return color(d.length);
-      });
-
-  //plot all goals
-  shotMap.append('g')
-    .attr('class', 'goals')
+    .attr('class', 'shots')
     .attr('transform', 'translate(' + sm.left + ' ' + sm.top + ')')
-    .selectAll('.goal')
+    .selectAll('.shot')
     .data(selectedShots)
     .enter().append('circle')
-    .attr('class', 'goal')
+    .attr('class', 'shot')
     .attr('data-id', d => d.id)
     .attr('data-minute', d => d.minute)
     .attr('data-result', d => d.result)
@@ -166,14 +208,31 @@ function drawShotmap(data) {
     .attr('stroke', 'yellow')
     .attr('stroke-width', 1.2)
     .attr('stroke-opacity', 1);
+}
 
-  //add mouseover
-  d3.selectAll('.goal').on('mouseover', function(d){
-    var thisGoal = d3.select(this);
-    console.log(thisGoal.attr('data-player') + ' ' + thisGoal.attr('data-h_team') + ' vs ' + thisGoal.attr('data-a_team'));
-    console.log(thisGoal.attr('data-X') + ', ' + thisGoal.attr('data-Y'));
-    console.log(sm.yScaleUnderstat(thisGoal.attr('data-X')) + ', ' + sm.xScaleUnderstat(thisGoal.attr('data-Y')));
+function addMouseOverToShots() {
+  d3.selectAll('.shot').on('mouseover', function(d){
+    var thisShot = d3.select(this);
+    console.log(thisShot.attr('data-player') + ' ' + thisShot.attr('data-h_team') + ' vs ' + thisShot.attr('data-a_team'));
+    console.log(thisShot.attr('data-X') + ', ' + thisShot.attr('data-Y'));
+    console.log(sm.yScaleUnderstat(thisShot.attr('data-X')) + ', ' + sm.xScaleUnderstat(thisShot.attr('data-Y')));
   });
+}
+
+function drawHexbin(shotMap, selectedShotsCoord, hexbin, colorScale) {
+  shotMap.append('g')
+      .attr('class', 'hexbin')
+      .attr('transform', 'translate(' + sm.left + ', ' + sm.top + ')')
+      .selectAll('path')
+      .data(hexbin(selectedShotsCoord))
+      .enter().append('path')
+      .attr('transform', function(d) {
+        return 'translate(' + d.x + ',' + d.y + ')';
+      })
+      .attr('d', hexbin.hexagon())
+      .attr('fill', function(d) {
+        return colorScale(d.length);
+      });
 }
 
 function drawFieldLines() {
