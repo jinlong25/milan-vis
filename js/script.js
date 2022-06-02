@@ -27,6 +27,9 @@ d3.select('#player_selector')
   .append('span')
   .attr('class', 'badge badge-dark')
   .attr('data-us-player-id', d => d.understat_player_id)
+  .attr('data-first-name', d => d.first_name)
+  .attr('data-last-name', d => d.last_name)
+  .attr('data-jersey-number', d => d.jersey_number)
   .text(d => d.jersey_number + ' - ' + d.last_name);
 
 // <span class="badge badge-primary">Primary</span>
