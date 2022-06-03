@@ -12,8 +12,5 @@ svg {
   margin-right: 5px;
   margin-bottom: 5px;
   font-size: 30px;
-}
-
-#player_selector {
-  
+  cursor: pointer;
 }

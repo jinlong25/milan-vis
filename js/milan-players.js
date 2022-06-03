@@ -1,16 +1,16 @@
 var milan_players = [
-  {
-      'first_name': 'Ciprian',
-      'last_name': 'Tătărușanu',
-      'jersey_number': '1',
-      'understat_player_id': '1416'
-  },
-  {
-      'first_name': 'Mike',
-      'last_name': 'Maignan',
-      'jersey_number': '16',
-      'understat_player_id': '3737'
-  },
+  // {
+  //     'first_name': 'Ciprian',
+  //     'last_name': 'Tătărușanu',
+  //     'jersey_number': '1',
+  //     'understat_player_id': '1416'
+  // },
+  // {
+  //     'first_name': 'Mike',
+  //     'last_name': 'Maignan',
+  //     'jersey_number': '16',
+  //     'understat_player_id': '3737'
+  // },
   {
       'first_name': 'Davide',
       'last_name': 'Calabria',

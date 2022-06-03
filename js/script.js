@@ -35,7 +35,7 @@ d3.select('#player_selector')
 //insert all sector badge
 d3.select('#player_selector')
   .append('span').lower()
-  .attr('class', 'badge badge-secondary player-selector')
+  .attr('class', 'badge badge-danger player-selector')
   .attr('data-us-player-id', 'all')
   .text('All Players');
 
