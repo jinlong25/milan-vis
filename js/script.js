@@ -99,7 +99,7 @@ d3.csv('data/data.csv').then(
 
     //define hexbin function
     var hexbin = d3.hexbin()
-        .radius(15)
+        .radius(35)
         .extent([[0, 0], [sm.width, sm.height]]);
 
     //draw hexbins
